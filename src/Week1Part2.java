@@ -321,12 +321,13 @@ public class Week1Part2 {
 
 
     public static int zero_insert(int n){
-
+        boolean minus=false;
+        if(n<0){
+            n = Math.abs(n);
+            minus = true;
+        }
         String num = Integer.toString(n);
         StringBuilder b= new StringBuilder();
-        if(n<0){
-            b.delete(0,1);
-        }
         int j=0;
         for (int i = 1; i <num.length() ; i++) {
             if(b.length() == 0){
@@ -343,15 +344,22 @@ public class Week1Part2 {
 
         }
         BigInteger big = BigInteger.valueOf(Integer.MAX_VALUE);
-        String res = b.toString();
-        if(big.compareTo(new BigInteger( res )) == -1){
+        if(big.compareTo(new BigInteger( b.toString() )) == -1){
             System.out.println("too big number for integer");
             return 0;
         }
-
+        String res =null;
+        if(minus){
+            res = "-";
+        }
+        res += b.toString();
         n= Integer.parseInt(res);
         return n;
     }
+
+
+
+
 
 
 
