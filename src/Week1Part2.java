@@ -1,5 +1,7 @@
 import java.math.BigInteger;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by georgipavlov on 20.11.15.
@@ -249,20 +251,40 @@ public class Week1Part2 {
 
 
     //weak2
+    private Pattern pattern;
+
+    private Matcher matcher;
+    public boolean march(String number){
+         final String USERNAME_PATTERN = "^[0-9]$";
+        pattern = Pattern.compile(USERNAME_PATTERN);
+        matcher = pattern.matcher(number);
+
+        return matcher.matches();
+
+    }
+
     public boolean is_credit_card_valid(String number){
-        if(number.length() % 2 == 0 ){
+        if(number.length() % 2 == 0 || march(number)){
+            System.out.println("string length is not odd or" +
+                    " it contains not only numbers");
             return false;
         }
-        int sum=0;
+        long sum=0;
+        BigInteger bigFac = BigInteger.valueOf(0);
         for (int i = 0; i < number.length() ; i++) {
            if(i % 2 != 0){
-             sum += (i*2);
+               bigFac.add(BigInteger.valueOf(Integer.parseInt(String.valueOf(number.charAt(i)))));
            }else {
-               sum +=i;
+               bigFac.add(BigInteger.valueOf(Integer.parseInt(String.valueOf(number.charAt(i)))));
            }
         }
-        if (sum % 10 == 0){
-            return true;
+        if(!(bigFac.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == -1)){
+            int res = Integer.parseInt(bigFac.toString());
+            if(res % 10 == 0){
+                return true;
+            }
+        }else {
+            System.out.println("Too big value");
         }
         return false;
     }
