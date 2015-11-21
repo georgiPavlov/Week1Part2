@@ -170,13 +170,15 @@ public class Week1Part2 {
         }
         if(w == ' ' && count > 3){
             tempCount = count;
-            temp -=tempCount-count;
             count=3;
+            temp -=tempCount-count;
+
 
         }else  if(w != ' ' && count > 4){
             tempCount = count;
-            temp -=tempCount-count;
             count=4;
+            temp -=tempCount-count;
+
         }
         if(count == 2){
             if(upperLetter){b.append(Character.toUpperCase(x));
@@ -211,6 +213,10 @@ public class Week1Part2 {
 
 
     public int  hasStartOneMoreFriday(String start,String end){
+        if((!march2(start)) || (!march2(end))){
+            System.out.println("invalid input years must be positive and from 0 to 100000");
+            return 0;
+        }
         String[] days= {
             "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY",
             "THURSDAY", "FRIDAY", "SATURDAY"
@@ -252,14 +258,27 @@ public class Week1Part2 {
 
     //weak2
     private Pattern pattern;
+    private Pattern pattern2;
 
     private Matcher matcher;
+    private Matcher matcher2;
+
+
     public boolean march(String number){
          final String USERNAME_PATTERN = "^[0-9]$";
         pattern = Pattern.compile(USERNAME_PATTERN);
         matcher = pattern.matcher(number);
 
         return matcher.matches();
+
+    }
+
+    public boolean march2(String number){
+        final String USERNAME_PATTERN = "^[0-9]{0,1000000}$";
+        pattern2 = Pattern.compile(USERNAME_PATTERN);
+        matcher2 = pattern2.matcher(number);
+
+        return matcher2.matches();
 
     }
 
