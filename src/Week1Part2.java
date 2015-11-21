@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Stack;
 
 /**
@@ -248,9 +249,115 @@ public class Week1Part2 {
 
 
     //weak2
-    public void is_credit_card_valid(String number){
-        System.out.println("Start");
+    public boolean is_credit_card_valid(String number){
+        if(number.length() % 2 == 0 ){
+            return false;
+        }
+        int sum=0;
+        for (int i = 0; i < number.length() ; i++) {
+           if(i % 2 != 0){
+             sum += (i*2);
+           }else {
+               sum +=i;
+           }
+        }
+        if (sum % 10 == 0){
+            return true;
+        }
+        return false;
     }
+
+
+     public boolean is_an_bn(String word){
+
+         if(word.length() % 2 != 0 ){
+             return false;
+         }
+         int n = word.length() / 2;
+         for (int i = 0; i < n ; i++) {
+             if(word.charAt(i) != 'a'){
+                 return false;
+             }
+         }
+
+         for (int i = n ; i < word.length() ; i++) {
+             if(word.charAt(i) != 'b'){
+                 return false;
+             }
+         }
+
+         return true;
+
+     }
+
+
+    public static String reduce_file_path(String path){
+        StringBuilder temp = new StringBuilder();
+        int size=0;
+        String[] arr = path.split("[/]+");
+        p:for (int i = 1; i <arr.length ; i++) {
+            System.out.println(arr[i]);
+
+            if(arr[i].charAt(0) == '.' && arr[i].length() == 1){
+                System.out.println("res");
+                continue p;
+            } else if(arr[i].equals("..")){
+                if(temp.length() == 0){
+                    System.out.println("invalid path");
+                    return "";
+                }
+                temp.delete(size,temp.length());
+                continue p;
+            }
+            size=temp.length();
+            temp.append(arr[i]);
+            temp.append("/");
+
+        }
+        String result = "/";
+        if(!(temp.length() == 0)){ result +=temp; }
+        return result;
+    }
+
+
+    public static int zero_insert(int n){
+
+        String num = Integer.toString(n);
+        StringBuilder b= new StringBuilder();
+        if(n<0){
+            b.delete(0,1);
+        }
+        int j=0;
+        for (int i = 1; i <num.length() ; i++) {
+            if(b.length() == 0){
+                b.append(num.charAt(j));
+            }
+            if(num.charAt(i) == num.charAt(j)){
+                b.append('0');
+            }else if( (Integer.parseInt(String.valueOf(num.charAt(i))) +
+                    Integer.parseInt(String.valueOf(num.charAt(j))))% 10 == 0){
+                b.append('0');
+            }
+            b.append(num.charAt(i));
+            j++;
+
+        }
+        BigInteger big = BigInteger.valueOf(Integer.MAX_VALUE);
+        String res = b.toString();
+        if(big.compareTo(new BigInteger( res )) == -1){
+            System.out.println("too big number for integer");
+            return 0;
+        }
+
+        n= Integer.parseInt(res);
+        return n;
+    }
+
+
+
+
+
+
 
 
 
