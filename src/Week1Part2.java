@@ -247,6 +247,11 @@ public class Week1Part2 {
     }
 
 
+    //weak2
+    public void is_credit_card_valid(String number){
+
+    }
+
 
 
 
