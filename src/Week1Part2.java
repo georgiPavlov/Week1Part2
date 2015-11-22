@@ -377,6 +377,10 @@ public class Week1Part2 {
 
 
     public static String reduce_file_path(String path){
+        if(path.charAt(0) != '/'){
+            System.out.println("Invalid path");
+            return "";
+        }
         StringBuilder temp = new StringBuilder();
         int size=0;
         String[] arr = path.split("[/]+");
