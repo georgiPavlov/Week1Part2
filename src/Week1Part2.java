@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
  * Created by georgipavlov on 20.11.15.
  */
 public class Week1Part2 {
+
     public boolean isHack(int n){
+        n = Math.abs(n);
         Stack<Integer> stack = new Stack<>();
        int temp;
         while(n != 0 ){
@@ -40,13 +42,20 @@ public class Week1Part2 {
     public void nextHack(int n){
         if(isHack(n)){
             n++;
-            while (!isHack(n)) {}
+            while (!isHack(n)) {
+               if(n == Integer.MAX_VALUE){
+                   System.out.println("no next hack number");
+                   return;
+               }
+                n++;
+            }
             System.out.print("Next number: " + n);
         }
     }
 
-    public int  countVowels(String str,String line){
-       char[] charArray = str.toCharArray() ;
+    public int  countVowels(String str){
+       String line ="aeiouy";
+        char[] charArray = str.toCharArray() ;
         int count=0;
         for (int i = 0; i < charArray.length; i++) {
             for (int j = 0; j <line.length() ; j++) {
@@ -63,29 +72,65 @@ public class Week1Part2 {
     }
 
 
+    public int  countConsonants(String str){
+        String line ="bcdfghjklmnpqrstvwxz";
+        char[] charArray = str.toCharArray() ;
+        int count=0;
+        for (int i = 0; i < charArray.length; i++) {
+            for (int j = 0; j <line.length() ; j++) {
+                if(Character.isLetter(line.charAt(j))) {
+                    if (Character.toLowerCase(charArray[i]) ==
+                            Character.toLowerCase(line.charAt(j))) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+
+    }
+
+
+
+
+    private  int count;
+    private boolean palTrue=true;
+
     public int PalindromeScore(int n){
-        if(isPalindrome(n)){
+        if(isPalindrome(n) && palTrue){
             return 1;
-        }else {
-            int func=0;
-            String string = Integer.toString(n);
-            StringBuilder b =new StringBuilder(string);
-            string=b.reverse().toString();
-            func=1+ n+ Integer.parseInt(string);
+        }else if(!palTrue){
+            System.out.println("palindrome not found ");
+            return 0;
+        } else {
+            int func=pScore(n);
             return PalindromeScore(func);
         }
     }
 
-    public  boolean isPalindrome(int n){
-        String argument= Integer.toString(n);
-        int temp=0;
-        if(argument.charAt(0) == '-'){
-            temp=1;
-        }
-        int size = argument.length();
-        int frond = temp;
-        int back = size;
 
+    public int pScore(int n){
+        int func;
+        String string = Integer.toString(n);
+        StringBuilder b =new StringBuilder(string);
+        string=b.reverse().toString();
+        BigInteger bigInteger = BigInteger.valueOf(n);
+        bigInteger.add(BigInteger.valueOf(Integer.parseInt(string)));
+        bigInteger.add(BigInteger.valueOf(1));
+        if(!(bigInteger.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1)){
+            func = Integer.parseInt(bigInteger.toString());
+            return func;
+        }
+        palTrue=false;
+        return 0;
+    }
+
+    public  boolean isPalindrome(int n){
+        n= Math.abs(n);
+        String argument= Integer.toString(n);
+        int size = argument.length();
+        int frond = 0;
+        int back = size;
 
         while (frond <= back) {
             char start = argument.charAt(frond);
@@ -96,8 +141,6 @@ public class Week1Part2 {
             }
             frond++;
             back--;
-
-
         }
         return true;
     }
@@ -105,6 +148,7 @@ public class Week1Part2 {
     private int[] pressedSequence;
      private StringBuilder b = new StringBuilder();
      private boolean upperLetter=false;
+
     public String numbersToMessage(int[] pressedSequence1){
         pressedSequence=pressedSequence1;
 
