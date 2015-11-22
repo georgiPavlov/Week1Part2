@@ -117,7 +117,7 @@ public class Week1Part2 {
         BigInteger bigInteger = BigInteger.valueOf(n);
         bigInteger.add(BigInteger.valueOf(Integer.parseInt(string)));
         bigInteger.add(BigInteger.valueOf(1));
-        if(!(bigInteger.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == 1)){
+        if(bigInteger.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) == -1){
             func = Integer.parseInt(bigInteger.toString());
             return func;
         }
