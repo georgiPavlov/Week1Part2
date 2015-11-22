@@ -341,7 +341,7 @@ public class Week1Part2 {
                bigFac.add(BigInteger.valueOf(Integer.parseInt(String.valueOf(number.charAt(i)))));
            }
         }
-        if(!(bigFac.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == -1)){
+        if(bigFac.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) == 1){
             int res = Integer.parseInt(bigFac.toString());
             if(res % 10 == 0){
                 return true;
